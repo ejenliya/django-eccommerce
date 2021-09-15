@@ -1,0 +1,243 @@
+{% extends "main.html" %}
+{% block main_body %}
+{% load static %}
+<!-- lodaer  -->
+{% include "loader.html" %}
+{% load cart_template_tags %}
+<!-- loader end  -->
+<!-- main start  -->
+<div id="main">
+    <!-- header  -->
+    {% include "header.html" %}
+    <!--header end -->
+    <!-- wrapper  -->
+    <div id="wrapper">
+        <!-- content  -->
+        <div class="content">
+            <!--  section  -->
+            <section class="parallax-section hero-section hidden-section" data-scrollax-parent="true">
+                <div class="bg par-elem " data-bg='{% static "images/bg/1.jpg" %}' data-scrollax="properties: { translateY: '30%' }">
+                </div>
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="section-title">
+                        {% if request.session.lang == "uk" %}
+                            <h4>Замовляй їжу з нашим сервісом</h4>
+                            <h2>Наш магазин</h2>
+                        {% elif request.session.lang == "ru" %}
+                            <h4>Заказывай еду с нашим сервисом</h4>
+                            <h2>Наш магазин</h2>
+                        {% else %}
+                            <h4>Order food with our service </h4>
+                            <h2>Our shop</h2>
+                        {% endif %}
+                        <div class="dots-separator fl-wrap"><span></span></div>
+                    </div>
+                </div>
+                <div class="hero-section-scroll">
+                    <div class="mousey">
+                        <div class="scroller"></div>
+                    </div>
+                </div>
+                <div class="brush-dec"></div>
+            </section>
+            <!--  section  end-->
+            <!--  section  -->
+            <section class="hidden-section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="fl-wrap post-container">
+                                <!-- post -->
+                                <div class="post fl-wrap fw-post">
+                                    <div class="shop-header-title fl-wrap">
+                                       	{% if request.session.lang == "uk" %}
+					    <h2>{{ object.title }}</h2>
+					 {% elif request.session.lang == "ru" %}
+					    <h2>{{ object.title_ru }}</h2>
+					 {% else %}
+					    <h2>{{object.title_eng }}</h2>
+					 {% endif %}
+                                        <div class="shop-header-title_opt">
+                                            <ul>
+                                                <li>
+                                                    <span class="menu-single-preice">
+                                                        {% if request.session.lang == "uk" %}
+                                                            Ціна:
+                                                        {% elif request.session.lang == "ru" %}
+                                                            Цена:
+                                                        {% else %}
+                                                           Price:
+                                                        {% endif %}
+                                                        {% if item.discount_price %}
+                                                            <strong>${{ object.discount_price }}</strong>
+                                                        {% else %}
+                                                            <strong>${{ object.price }}</strong>
+                                                        {% endif %}
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    <!-- div class="menu-single_rating">
+                                                        <span>3 reviews</span>
+                                                        <div class="star-rating" data-starrating="5"></div>
+                                                    </div> -->
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- blog media -->
+                                    <div class="blog-media fl-wrap">
+                                        <div class="single-slider-wrap">
+                                            <div class="product-slider fl-wrap">
+                                                <div class="swiper-container">
+                                                    <div class="swiper-wrapper lightgallery">
+                                                        <div class="swiper-slide hov_zoom"><img
+                                                                src="{{ object.image.url }}" alt=""><a
+                                                                href="{{ object.image.url }}"
+                                                                class="box-media-zoom   popup-image"><i
+                                                                    class="fal fa-search"></i></a></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- blog media end -->
+                                    <div class="blog-text fl-wrap">
+                                        <div class="pr-tags fl-wrap">
+                                            <span>{% if request.session.lang == "uk" %}
+                                                Категорія
+                                            {% elif request.session.lang == "ru" %}
+                                                Категория
+                                            {% else %}
+                                                Category
+                                            {% endif %} : </span>
+                                            <ul>
+                                                <li><a href="#">
+                                                    {% if request.session.lang == "uk" %}
+                                                        {{ object.category.category_name }}
+                                                    {% elif request.session.lang == "ru" %}
+                                                        {{ object.category.category_ru_name }}
+                                                    {% else %}
+                                                        {{ object.category.category_eng_name }}
+                                                    {% endif %} </a></li>
+                                            </ul>
+
+                                        </div>
+                                    <div class="blog-text fl-wrap">
+                                        <div class="pr-tags fl-wrap">
+                                            <span>{% if request.session.lang == "uk" %}
+                                                Склад
+                                            {% elif request.session.lang == "ru" %}
+                                                Состав
+                                            {% else %}
+                                                Components
+                                            {% endif %} : </span>
+                                                <ul>
+                                                    {% for tag in object.item_tag.all %}
+                                                    <li>
+                                                        <a href="#">
+                                                        {% if request.session.lang == "uk" %}
+                                                            {{ tag.item_tag_name }}
+                                                        {% elif request.session.lang == "ru" %}
+                                                            {{ tag.item_tag_ru_name }}
+                                                        {% else %}
+                                                            {{ tag.item_tag_eng_name }}
+                                                        {% endif %}
+                                                        </a>
+                                                    </li>
+                                                    {% endfor %}
+                                                </ul>
+
+                                        </div>
+                                        <div class="pr-tags fl-wrap">
+                                            {% if object.is_sushi_set %}
+                                                <span>
+                                                {% if request.session.lang == "uk" %}
+                                                    Сушi
+                                                {% elif request.session.lang == "ru" %}
+                                                    Суши
+                                                {% else %}
+                                                    Sushi
+                                                {% endif %} : </span>
+                                                <ul>
+                                                    {% for sushi in object.slug|sushi_set_components %}
+                                                    <li>
+                                                        <a href="{{ sushi.sushi.get_absolute_url }}">
+                                                        {% if request.session.lang == "uk" %}
+                                                            {{ sushi.sushi.title }}
+                                                        {% elif request.session.lang == "ru" %}
+                                                            {{ sushi.sushi.title_ru }}
+                                                        {% else %}
+                                                            {{ sushi.sushi.title_eng }}
+                                                        {% endif %} : 
+                                                            {{ sushi.sushi_amount }}
+                                                        </a>
+                                                    </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+
+                                        </div>
+                                        <p>
+                                        </p>
+                                    </div>
+                                    <div class="shop-item-footer fl-wrap">
+                                        <div class="qty_btn">
+
+                                            <a href="{{ object.get_add_to_cart_url }}" style="color:#fff" ><button class="btn">{% if request.session.lang == "uk" %}
+                                                Замовити
+                                            {% elif request.session.lang == "ru" %}
+                                                Заказать
+                                            {% else %}
+                                                Add to cart
+                                            {% endif %} <i
+                                                    class="fal fa-long-arrow-right"></i></button></a>
+                                        </div>
+                                        <!-- <ul class="post-counter">
+                                                    <li><i class="far fa-eye"></i><span>567</span></li>
+                                                    <li><i class="fal fa-shopping-bag"></i><span>256</span></li>
+                                                </ul> -->
+                                    </div>
+                                </div>
+                                <!-- post end-->
+ 
+                                <!-- post-related  end-->
+                            </div>
+                            <div class="clearfix"></div>
+                            <!-- <div class="bold-separator bold-separator_dark"><span></span></div>
+                            <div class="clearfix"></div> -->
+                            <a href="{% url 'core:shop' %}" class="btn  shop-btn">{% if request.session.lang == "uk" %}
+                                Назад до магазину 
+                            {% elif request.session.lang == "ru" %}
+                                Назад в магазин
+                            {% else %}
+                                Back to Shop
+                            {% endif %}<i
+                                    class="fal fa-long-arrow-right"></i></a>
+                        </div>
+                        <!--  sidebar  -->
+                        <!--  sidebar end-->
+                    </div>
+                    <div class="fl-wrap limit-box"></div>
+                </div>
+                
+            </section>
+            <!--  section end  -->
+            <div class="brush-dec2 brush-dec_bottom"></div>
+        </div>
+        <!-- content end  -->
+        <!-- footer -->
+        <div class="height-emulator fl-wrap"></div>
+        {% include "footer.html" %}
+        <!-- footer end-->
+    </div>
+    <!-- wrapper end -->
+    {% include "reservation.html" %}
+    <!-- cursor-->
+    <div class="element">
+        <div class="element-item"></div>
+    </div>
+    <!-- cursor end-->
+</div>
+<!-- Main end -->
+{% endblock main_body %}

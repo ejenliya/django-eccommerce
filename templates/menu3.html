@@ -1,0 +1,312 @@
+{% extends "main.html" %} {% block main_body %} {% load static %} {% load cart_template_tags %}
+<!-- lodaer  -->
+{% include "loader.html" %}
+<!-- loader end  -->
+<!-- main start  -->
+<div id="main">
+    <style>
+
+        a.add_cart:hover>.custom_btn_add{            
+            background-color: inherit;
+            transition: none;
+        }
+        a.add_cart>.custom_btn_add{            
+            background: #fff;
+            border: none;
+            color: #000;
+            font-style: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Playfair Display',cursive;
+            transition: all .2s ease-out;
+        }
+        .custom_btn_add:active,
+        .custom_btn_add:hover
+        {
+            background-color: inherit;
+        }
+        @media screen and (max-width:450px) {
+            a.add_cart>.custom_btn_add{            
+                background: #fff;
+                border: none;
+                color: #000;
+                font-style: inherit;
+                font-size: 13px;
+                font-weight: 600;
+                font-family: 'Playfair Display',cursive;
+                transition: all .2s ease-out;
+            }
+        }
+        h4.slider_descrtiption{
+            color:white;
+        }
+    </style>
+    <!-- header  -->
+    {% include "header.html" %}
+    <!--header end -->
+    <!-- wrapper  -->
+    <div id="wrapper">
+        <div class="hero-wrap fl-wrap full-height">
+            <!--fs-slider-wrap -->
+            <div class="fs-slider-wrap fs-slider-det full-height fl-wrap hero_fsw dark-bg">
+                <div class="fs-slider full-height fl-wrap">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <!-- swiper-slide-->
+                            {% if request.session.lang == "uk" %}
+                              {% for slide in request|main_slider %}
+                              <div class="swiper-slide">
+                                  <div class="fs-slider-item fl-wrap">
+                                      <div class="bg" data-bg="{{ slide.image.url }}" data-swiper-parallax="40%"></div>
+                                      <div class="overlay"></div>
+                                      <div class="grid-carousel-title">
+                                          <h3>{{ slide.slider_title }}</h3>
+                                          <div class="clearfix"></div>
+                                          <h4 class="slider_descrtiption">{{ slide.slider_text }}</h4>
+                                          <div class="bold-separator"><span></span></div>
+                                          {% if slide.button_text %}
+                                          <a href="#sec2" class="hero_btn custom-scroll-link">{{ slide.button_text }}<i class="fal fa-long-arrow-down"></i></a>
+                                          {% endif %}
+                                      </div>
+                                  </div>
+                              </div>
+                              {% endfor %}
+                            {% elif request.session.lang == "ru" %}
+                              {% for slide in request|main_slider %}
+                              <div class="swiper-slide">
+                                  <div class="fs-slider-item fl-wrap">
+                                      <div class="bg" data-bg="{{ slide.image.url }}" data-swiper-parallax="40%"></div>
+                                      <div class="overlay"></div>
+                                      <div class="grid-carousel-title">
+                                          <h3>{{ slide.slider_ru_title }}</h3>
+                                          <div class="clearfix"></div>
+                                          <h4>{{ slide.slider_ru_text }}</h4>
+                                          <div class="bold-separator"><span></span></div>
+                                          {% if slide.button_text %}
+                                          <a href="#sec2" class="hero_btn custom-scroll-link">{{ slide.button_ru_text }}<i class="fal fa-long-arrow-down"></i></a>
+                                          {% endif %}
+                                      </div>
+                                  </div>
+                              </div>
+                              {% endfor %}
+                            {% else %} 
+                            {% for slide in request|main_slider %}
+                            <div class="swiper-slide">
+                                <div class="fs-slider-item fl-wrap">
+                                    <div class="bg" data-bg="{{ slide.image.url }}" data-swiper-parallax="40%"></div>
+                                    <div class="overlay"></div>
+                                    <div class="grid-carousel-title">
+                                        {% if slide.slider_eng_title %}
+                                        <h3>{{ slide.slider_eng_title }}</h3>
+                                        {% endif %}
+                                        <div class="clearfix"></div>
+                                        {% if slide.slider_eng_text %}
+                                        <h4>{{ slide.slider_eng_text }}</h4>
+                                        {% endif %}
+                                        <div class="bold-separator"><span></span></div>
+                                        {% if slide.button_eng_text %}
+                                        <a href="#sec2" class="hero_btn custom-scroll-link">{{ slide.button_eng_text }}<i class="fal fa-long-arrow-down"></i></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %} {% endif %}
+                            <!-- swiper-slide-->
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-slider_btn hero-slider_btn_next fs-slider-button-next"><i class="fas fa-caret-right"></i></div>
+                <div class="hero-slider_btn hero-slider_btn_prev fs-slider-button-prev"><i class="fas fa-caret-left"></i></div>
+                <div class="hero-slider-wrap_pagination"></div>
+            </div>
+            <!--fs-slider-wrap end -->
+            <div class="hero-dec_top"></div>
+            <div class="hero-dec_bottom"></div>
+            <div class="hero-dec_top_right"></div>
+            <div class="hero-dec_bottom_right"></div>
+            <div class="brush-dec"></div>
+        </div>
+        <!-- content  -->
+        <div class="content">
+            <!--  section  -->
+            <!--  section  end-->
+            <!--  section  -->
+            <section class="hidden-section big-padding" data-scrollax-parent="true" id="sec2">
+                <div class="container">
+                    <div class="gallery_filter-button btn">{% if request.session.lang == "uk" %}Показати фільтри{% elif request.session.lang == "ru" %}Показать фильтры{% else %}Show Filters{% endif %} <i class="fal fa-long-arrow-down"></i></div>
+                    <!-- gallery-filters -->
+                    <div class="gallery-filters gth">
+                        {% if request.session.lang == "uk" %}
+                          {% for category in request|categories %} 
+                            {% if category.label == '*' %}
+                              <a href="#" class="gallery-filter gallery-filter-active" data-filter="{{ category.label }}"><span>0{{ forloop.counter }}.</span> {{ category.category_name }}</a>
+                            {% else %}
+                              <a href="#" class="gallery-filter" data-filter=".{{ category.label }}"><span>0{{ forloop.counter }}.</span> {{ category.category_name }}</a>
+                            {% endif %} 
+                          {% endfor %}
+                        {% elif request.session.lang == "ru" %}
+                          {% for category in request|categories %} 
+                            {% if category.label == '*' %}
+                              <a href="#" class="gallery-filter gallery-filter-active" data-filter="{{ category.label }}"><span>0{{ forloop.counter }}.</span> {{ category.category_ru_name }}</a>
+                            {% else %}
+                              <a href="#" class="gallery-filter" data-filter=".{{ category.label }}"><span>0{{ forloop.counter }}.</span> {{ category.category_ru_name }}</a>
+                            {% endif %} 
+                          {% endfor %}
+                        {% else %} 
+                        {% for category in request|categories %} 
+                        {% if category.label == '*' %}
+                        <a href="#" class="gallery-filter gallery-filter-active" data-filter="{{ category.label }}"><span>0{{ forloop.counter }}.</span> {{ category.category_eng_name }}</a>
+                        {% else %}
+                        <a href="#" class="gallery-filter" data-filter=".{{ category.label }}"><span>0{{ forloop.counter }}.</span> {{ category.category_eng_name }}</a>
+                        {% endif %} 
+                        {% endfor %} 
+                        {% endif %}
+                        <!-- <a href="#" class="gallery-filter" data-filter=".classic"><span>03.</span>Класичні роли</a>
+                        <a href="#" class="gallery-filter" data-filter=".vegetables"><span>04.</span>Овочеві роли</a>
+                        <a href="#" class="gallery-filter" data-filter=".sushi"><span>05.</span>Суші</a>
+                        <a href="#" class="gallery-filter" data-filter=".spice"><span>06.</span>Спайсі суші</a>
+                        <a href="#" class="gallery-filter" data-filter=".sets"><span>07.</span>Сети</a> -->
+                    </div>
+                    <!-- gallery-filters end-->
+                    <div class="gallery-items grid-big-pad lightgallery three-column fl-wrap" style="margin-bottom: 50px">
+                        <!-- gallery-item-->
+                        {% if request.session.lang == "uk" %}
+                          {% for item in items %}
+                          <div class="gallery-item {{ item.category.label }}">
+                              <a>
+                                    <div class="grid-item-holder hov_zoom">
+                                        <img src="{{ item.image.url }}" alt="" />
+                                    </div>
+                                </a>
+                              <div class="grid-item-details">
+                                  <a>
+                                      <h3>{{ item.title }}</h3>
+                                  </a>
+                                  <p>{{ item.description }}</p>
+                                  <div class="grid-item_price">
+                                      {% if item.discount_price %}
+                                      <span><span style="font-family: Poppins, sans-serif;">₴</span> {{ item.discount_price }}</span>
+                                      {% else %}
+                                      <span><span style="font-family: Poppins, sans-serif;">₴</span>{{ item.price }}</span>
+                                      {% endif %}
+                                      <a href="{{ item.get_add_to_cart_url }}" class="add_cart"><button class='custom_btn_add'>Додати до кошику</button></a>
+                                  </div>
+                                  <div class="pr-tags pr-main-tags fl-wrap">
+                                    <span>Склад : </span>
+                                        <ul>
+                                            {% for tag in item.item_tag.all %}
+                                            <li>
+                                                <a href="#">
+                                                    {{ tag.item_tag_name }}
+                                                </a>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+
+                                </div>
+                              </div>
+                          </div>
+                          {% endfor %}
+                        {% elif request.session.lang == "ru" %}
+                          {% for item in items %}
+                          <div class="gallery-item {{ item.category.label }}">
+                              <a>
+                                    <div class="grid-item-holder hov_zoom">
+                                        <img src="{{ item.image.url }}" alt="" />
+                                    </div>
+                                </a>
+                              <div class="grid-item-details">
+                                  <a>
+                                      <h3>{{ item.title_ru }}</h3>
+                                  </a>
+                                  <p>{{ item.ru_description }}</p>
+                                  <div class="grid-item_price">
+                                      {% if item.discount_price %}
+                                      <span><span style="font-family: Poppins, sans-serif;">₴</span>{{ item.discount_price }}</span>
+                                      {% else %}
+                                      <span><span style="font-family: Poppins, sans-serif;">₴</span>{{ item.price }}</span>
+                                      {% endif %}
+                                      <a href="{{ item.get_add_to_cart_url }}" class="add_cart">Добавить в корзину</a>
+                                  </div>
+                                  <div class="pr-tags pr-main-tags fl-wrap">
+                                    <span>Состав : </span>
+                                        <ul>
+                                            {% for tag in item.item_tag.all %}
+                                            <li>
+                                                <a href="#">
+                                                    {{ tag.item_tag_ru_name }}
+                                                </a>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+
+                                </div>
+                              </div>
+                          </div>
+                          {% endfor %}
+                        {% else %} {% for item in items %}
+                            <div class="gallery-item {{ item.category.label }}">
+                                <a>
+                                    <div class="grid-item-holder hov_zoom">
+                                        <img src="{{ item.image.url }}" alt="" />
+                                    </div>
+                                </a>
+                            <div class="grid-item-details">
+                                <a>
+                                    <h3>{{ item.title_eng }}</h3>
+                                </a>
+                                <p>{{ item.english_description }}</p>
+                                <div class="grid-item_price">
+                                    {% if item.discount_price %}
+                                    <span><span style="font-family: Poppins, sans-serif;">₴</span>{{ item.discount_price }}</span>
+                                    {% else %}
+                                    <span><span style="font-family: Poppins, sans-serif;">₴</span>{{ item.price }}</span>
+                                    {% endif %}
+                                    <a href="{{ item.get_add_to_cart_url }}" class="add_cart">Add to cart</a>
+                                </div>
+                                <div class="pr-tags pr-main-tags fl-wrap">
+                                    <span>Components : </span>
+                                        <ul>
+                                            {% for tag in item.item_tag.all %}
+                                            <li>
+                                                <a href="#">
+                                                    {{ tag.item_tag_eng_name }}
+                                                </a>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %} {% endif %}
+                    </div>
+                    <!-- gallery end -->
+                    <div class="clearfix"></div>
+                    <div class="bold-separator bold-separator_dark"><span></span></div>
+                    <div class="clearfix"></div>
+                    <!-- <a href="#" class="btn  ">Download menu in PDF<i class="fal fa-long-arrow-right"></i></a> -->
+                </div>
+                <div class="section-bg">
+                    <div class="bg" data-bg='{% static "images/bg/dec/section-bg.png" %}'></div>
+                </div>
+            </section>
+            <!--  section end  -->
+            <div class="brush-dec2 brush-dec_bottom"></div>
+        </div>
+        <!-- content end  -->
+        <!-- footer -->
+        <div class="height-emulator fl-wrap"></div>
+        {% include "footer.html" %}
+        <!-- footer end-->
+    </div>
+    <!-- wrapper end -->
+    {% include "reservation.html" %}
+    <!-- cursor-->
+    <div class="element">
+        <div class="element-item"></div>
+    </div>
+    <!-- cursor end-->
+</div>
+<!-- Main end -->
+{% endblock main_body %}

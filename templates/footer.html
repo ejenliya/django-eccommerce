@@ -1,0 +1,157 @@
+{% load static %}
+
+<footer class="fl-wrap dark-bg fixed-footer">
+    <div class="container">
+        <div class="footer-top fl-wrap">
+            <!-- <a href="{% url 'core:menu' %}" class="footer-logo"><img src='{% static "images/logo.png" %}' alt=""></a> -->
+            <div class="lang-wrap"><a href="#" class='uk-lang act-lang'>Uk</a><span>/</span><a class='en-lang' href="#">En</a><span>/</span><a class='ru-lang' href="#">Ru</a></div>
+            <div class="footer-social">
+                <span class="footer-social-title">
+                    {% if request.session.lang == "uk" %}
+                        Спостерігати за нами :
+                    {% elif request.session.lang == "ru" %}
+                        Следить за нами :
+                    {% else %}
+                        Follow us :
+                    {% endif %}
+                </span>
+                <ul>
+                    <li><a href="https://www.facebook.com/tokyo.od.ua/" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="https://instagram.com/tokyo.od.ua?igshid=o5y4xnlsjtwo" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- footer-widget-wrap -->
+        <div class="footer-widget-wrap fl-wrap">
+            <div class="row">
+                <!-- footer-widget -->
+                <div class="col-md-4">
+                    <div class="footer-widget">
+                        <div class="footer-widget-title">
+                            {% if request.session.lang == "uk" %}
+                                Розділи :
+                            {% elif request.session.lang == "ru" %}
+                                Разделы :
+                            {% else %}
+                                Sections :
+                            {% endif %}
+                        </div>
+                        <div class="footer-widget-content">
+                            <div class="footer-contacts footer-box fl-wrap">
+                                <ul>
+                                    <li><a class="footer-widget-title" href="{% url  'core:menu' %}">
+                                            {% if request.session.lang == "uk" %}
+                                                МЕНЮ
+                                            {% elif request.session.lang == "ru" %}
+                                                МЕНЮ
+                                            {% else %}
+                                                MENU
+                                            {% endif %}
+                                        </a>
+                                    </li>
+                                    <li><a class="footer-widget-title" href="{% url  'proposition:all_prospositions' %}">
+                                        {% if request.session.lang == "uk" %}
+                                            АКЦІЇ
+                                        {% elif request.session.lang == "ru" %}
+                                            АКЦИИ
+                                        {% else %}
+                                            PROMOTIONS
+                                        {% endif %}</a>
+                                    </li>
+                                    <li><a class="footer-widget-title" href="{% url  'core:shop' %}">
+                                        {% if request.session.lang == "uk" %}
+                                            ПОШУК ПО КОМПОНЕНТАМ
+                                        {% elif request.session.lang == "ru" %}
+                                            ПОИСК ПО КОМПОНЕНТАМ
+                                        {% else %}
+                                            SEARCH BY COMPONENTS
+                                        {% endif %}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- footer-widget  end-->
+                <!-- footer-widget -->
+                <div class="col-md-4">
+                    <div class="footer-widget">
+                        <div class="footer-widget-title">
+                            {% if request.session.lang == "uk" %}
+                                Графік роботи:
+                            {% elif request.session.lang == "ru" %}
+                                График работы:
+                            {% else %}
+                                Work schedule: 
+                            {% endif %}
+                        </div>
+                        <div class="footer-widget-content">
+                            <div class="footer-contacts footer-box fl-wrap">
+                                <ul>
+                                    <li>
+                                        <span>
+                                            {% if request.session.lang == "uk" %}
+                                                Пн-Пт :
+                                            {% elif request.session.lang == "ru" %}
+                                                Пн-Пт :
+                                            {% else %}
+                                                Mon-Fri from
+                                            {% endif %}
+                                        </span>
+                                        <a href="#">10:00 - 22:30</a>
+                                    </li>
+                                    <li>
+                                        <span>
+                                            {% if request.session.lang == "uk" %}
+                                                Сб-Нд :
+                                            {% elif request.session.lang == "ru" %}
+                                                Сб-Вс :
+                                            {% else %}
+                                                Sat-Sun from
+                                            {% endif %}
+                                        </span>
+                                        <a href="#">10:00 - 22:30</a>
+                                    </li>
+                                </ul>
+                            </div>                            	
+                        </div>
+                    </div>
+                </div>
+                <!-- footer-widget  end-->
+                <!-- footer-widget -->
+                <div class="col-md-4">
+                    <div class="footer-widget">
+                        <div class="footer-widget-title">{% if request.session.lang == "uk" %}
+                            Зателефонувати
+                        {% elif request.session.lang == "ru" %}
+                            Позвонить
+                        {% else %}
+                            Call
+                        {% endif %}</div>
+                        <div class="footer-widget-content">
+                            <div class="footer-contacts footer-box fl-wrap">
+                                <ul>
+                                    <li><a href="tel:+380730484348">+380730484348</a></li>
+                                    <li><a href="tel:+380970484348">+380970484348</a></li>
+                                </ul>
+                            </div>                            	
+                        </div>
+                    </div>
+                </div>
+                <!-- footer-widget  end-->
+            </div>
+        </div>
+        <!-- footer-widget-wrap end-->
+        <div class="footer-bottom fl-wrap">
+            <div class="copyright">&#169; tokyo.od.ua 2021 . All rights reserved. </div>
+            <div class="to-top"><span>{% if request.session.lang == "uk" %}
+                Перейти до верху
+            {% elif request.session.lang == "ru" %}
+                Перейти на верх
+            {% else %}
+                Go to the top 
+            {% endif %} </span><i class="fal fa-angle-double-up"></i></div>
+        </div>
+    </div>
+</footer>
+
